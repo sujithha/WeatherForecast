@@ -39,7 +39,7 @@
                             <cucumberOutputDir>${project.build.directory}/cucumber-reports</cucumberOutputDir>
                             <useTestNG>true</useTestNG>
                             <format>json</format>
-                            <tags>@Regression</tags>
+                            <tags>${tag}</tags>
                             </configuration>
                     </execution>
                 </executions>

@@ -6,11 +6,11 @@ import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 
-public class StepInit {
+public class Hooks {
 
     public static TestContext testContext=null;
     BaseTestSession session=null;
-   public StepInit(TestContext testContext){
+   public Hooks(TestContext testContext){
         this.testContext=testContext;
         this.session=testContext.getBaseTestSession();
     }

@@ -1,8 +1,7 @@
-@Regression
+@regression @smoke
 Feature: Verify weather forecast
 
-
-
+  @scenario1
   Scenario Outline: I verify the weather forecast feature
     When I click on more button
     And I click on weather
