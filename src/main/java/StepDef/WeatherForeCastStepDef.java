@@ -19,8 +19,6 @@ public class WeatherForeCastStepDef {
     WeatherPage weatherPage=null;
     WeatherForeCastApiObj weatherForeCastApiObj=null;
     PropertyReader propertyReader=null;
-    Integer tempFromUi=null;
-    Double tempFromApi=null;
     TestContext testContext=null;
     BaseTestSession session=null;
 
@@ -42,20 +40,16 @@ public class WeatherForeCastStepDef {
     public void iClickOnMoreButton() {
         homePage.clickOnGetBreakingNews();
         homePage.clickOnMoreOption();
-        session.takeScreenShot(testContext.getScenario());
     }
 
     @Then("^I search the the \"([^\"]*)\" and select it$")
     public void iSearchTheTheAndSelectIt(String city) throws Throwable {
         weatherPage.searchAndSelectCity(city);
-        session.takeScreenShot(testContext.getScenario());
     }
 
     @And("^I click on the \"([^\"]*)\" on the map and capture the temperature$")
     public void iClickOnTheOnTheMapAndCaptureTheTemperature(String city) throws Throwable {
-
-        tempFromUi= weatherPage.fetchTemperatureAndClickCityInMap(city);
-        session.takeScreenShot(testContext.getScenario());
+        weatherPage.fetchTemperatureAndClickCityInMap(city);
     }
 
     @Then("^I verify the following fields are displayed on the weather window$")
@@ -64,18 +58,18 @@ public class WeatherForeCastStepDef {
         for(String label:labels){
             Assert.assertTrue(weatherPage.verifyFieldInPopup(label),"Verifying the field "+label+" on popup");
         }
-        session.takeScreenShot(testContext.getScenario());
+
 
     }
     @Then("^I hit the api with \"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\" and \"([^\"]*)\" and fetch the temperature from the api$")
     public void iHitTheApiWithAndAndFetchTheTemperatureFromTheApi(String host, String endpoint, String city, String apiKey) throws Throwable {
-         tempFromApi = weatherForeCastApiObj.fetchTheTeperatureFromApi(propertyReader.readProperty(host), propertyReader.readProperty(endpoint), city, propertyReader.readProperty(apiKey));
+          weatherForeCastApiObj.fetchTheTeperatureFromApi(propertyReader.readProperty(host), propertyReader.readProperty(endpoint), city, propertyReader.readProperty(apiKey));
     }
 
     @Then("^I verify the temperature from ui and the end point is matching with the variance$")
     public void iVerifyTheTemperatureFromUiAndTheEndPointIsMatchingWithThe() throws Throwable {
-      Boolean verify= weatherForeCastApiObj.compareTempWthVarianceLogic(Double.valueOf(tempFromUi),Double.valueOf(tempFromApi),Double.valueOf(propertyReader.readProperty("variance")));
-      Assert.assertTrue(verify,"The temperatures from UI ("+tempFromUi+") and temperature from Api ("+tempFromApi+") are not matching with for the variance "+propertyReader.readProperty("variance"));
+      Boolean verify= weatherForeCastApiObj.compareTempWthVarianceLogic(weatherForeCastApiObj.getTempFromApi(),weatherPage.getTempFromUi(),Double.valueOf(propertyReader.readProperty("variance")));
+      Assert.assertTrue(verify,"The temperatures from UI ("+weatherPage.getTempFromUi()+") and temperature from Api ("+weatherForeCastApiObj.getTempFromApi()+") are not matching with for the variance "+propertyReader.readProperty("variance"));
     }
 
 

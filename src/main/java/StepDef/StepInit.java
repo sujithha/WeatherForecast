@@ -17,14 +17,14 @@ public class StepInit {
     @Before
     public void beforeSuite(Scenario scenario)  {
         testContext.setScenario(scenario);
+        session.setScenario(scenario);
     }
        
     @After
     public void afterSuite(Scenario scenario) throws Throwable {
        if(scenario.isFailed()){
-
+           session.takeScreenShot();
        }
-        session.takeScreenShot(scenario);
         session.closeBrowser();
      }
     

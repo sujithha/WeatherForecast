@@ -23,11 +23,13 @@ public class HomePage implements Xpath.HomePage {
 	public void clickOnMoreOption(){
      session.getVisibleElement(moreOption).click();
      logger.info("Clicked on more button");
+     session.takeScreenShot();
 	}
 	
 	public void clickOnWeather() {
 		session.getVisibleElement(weather).click();
 		logger.info("Clicked on Weather");
+		session.takeScreenShot();
 	}
 	public void clickOnGetBreakingNews(){
 		try {

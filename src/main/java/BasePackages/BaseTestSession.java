@@ -31,6 +31,7 @@ public class BaseTestSession  {
 	public WebDriver driver=null;
 	public PropertyReader properties=null;
 
+	public  Scenario scenario=null;
 
     public BaseTestSession(String browser, PropertyReader propertyReader)  {
 		this.properties=propertyReader;
@@ -38,10 +39,17 @@ public class BaseTestSession  {
 			openBrowser(browser);
 		}
 		catch(Exception e){}
-		//waitForPageToLoad();
 		applyImplicitWait(20);
 	}
-    public WebDriver getDriver() {
+	public Scenario getScenario() {
+		return scenario;
+	}
+
+	public void setScenario(Scenario scenario) {
+		this.scenario = scenario;
+	}
+
+	public WebDriver getDriver() {
         return driver;
     }
 
@@ -92,9 +100,9 @@ public class BaseTestSession  {
 		driver.quit();
 	}
 	
-	public  void takeScreenShot(Scenario scenario){
+	public  void takeScreenShot(){
 		final byte[] screenshotFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.BYTES);
-			scenario.embed(screenshotFile,"image/png");
+			getScenario().embed(screenshotFile,"image/png");
 
 	}
 	
