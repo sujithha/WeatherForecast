@@ -99,7 +99,7 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <projectName>CucumberWebGui</projectName>
+                            <projectName>Weather Forecast</projectName>
                             <outputDirectory>${project.build.directory}/cucumber-report-html</outputDirectory>
                             <cucumberOutput>${project.build.directory}/cucumber-reports</cucumberOutput>
                             <checkBuildResult>false</checkBuildResult>
