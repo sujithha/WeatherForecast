@@ -1,5 +1,6 @@
 package StepDef;
 import ApiObject.WeatherForeCastApiObj;
+import BasePackages.BaseTestSession;
 import Common.PropertyReader;
 import PageObjects.HomePage;
 import PageObjects.WeatherPage;
@@ -14,14 +15,14 @@ import org.testng.Assert;
 import java.util.List;
 
 public class WeatherForeCastStepDef {
-     HomePage homePage= null;//StepInit.testContext.getPageObjectManager().getHomePage();
-    WeatherPage weatherPage=null;//StepInit.testContext.getPageObjectManager().getWeatherPage();
-    WeatherForeCastApiObj weatherForeCastApiObj=null;//StepInit.testContext.getApiObjectManager().getWeatherForeCastApiObj();
-    PropertyReader propertyReader=null;//StepInit.testContext.getPropertyReader();
+     HomePage homePage= null;
+    WeatherPage weatherPage=null;
+    WeatherForeCastApiObj weatherForeCastApiObj=null;
+    PropertyReader propertyReader=null;
     Integer tempFromUi=null;
     Double tempFromApi=null;
     TestContext testContext=null;
-
+    BaseTestSession session=null;
 
    public WeatherForeCastStepDef(TestContext testContext)  {
        this.testContext=testContext;
@@ -29,6 +30,7 @@ public class WeatherForeCastStepDef {
        this. weatherPage=this.testContext.getPageObjectManager().getWeatherPage();
        this.weatherForeCastApiObj= this.testContext.getApiObjectManager().getWeatherForeCastApiObj();
        this.propertyReader= this.testContext.getPropertyReader();
+       this.session=this.testContext.getBaseTestSession();
     }
 
     @And("^I click on weather$")
@@ -40,17 +42,20 @@ public class WeatherForeCastStepDef {
     public void iClickOnMoreButton() {
         homePage.clickOnGetBreakingNews();
         homePage.clickOnMoreOption();
+        session.takeScreenShot(testContext.getScenario());
     }
 
     @Then("^I search the the \"([^\"]*)\" and select it$")
     public void iSearchTheTheAndSelectIt(String city) throws Throwable {
         weatherPage.searchAndSelectCity(city);
+        session.takeScreenShot(testContext.getScenario());
     }
 
     @And("^I click on the \"([^\"]*)\" on the map and capture the temperature$")
     public void iClickOnTheOnTheMapAndCaptureTheTemperature(String city) throws Throwable {
 
         tempFromUi= weatherPage.fetchTemperatureAndClickCityInMap(city);
+        session.takeScreenShot(testContext.getScenario());
     }
 
     @Then("^I verify the following fields are displayed on the weather window$")
@@ -59,6 +64,7 @@ public class WeatherForeCastStepDef {
         for(String label:labels){
             Assert.assertTrue(weatherPage.verifyFieldInPopup(label),"Verifying the field "+label+" on popup");
         }
+        session.takeScreenShot(testContext.getScenario());
 
     }
     @Then("^I hit the api with \"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\" and \"([^\"]*)\" and fetch the temperature from the api$")

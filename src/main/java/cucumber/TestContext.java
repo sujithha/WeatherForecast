@@ -3,6 +3,7 @@ package cucumber;
 import BasePackages.BaseTestSession;
 import Common.PropertyReader;
 import Common.RestWrapper;
+import cucumber.api.Scenario;
 
 public class TestContext {
 
@@ -11,14 +12,22 @@ public class TestContext {
     RestWrapper restWrapper=null;
     ApiObjectManager apiObjectManager=null;
     PageObjectManager pageObjectManager=null;
-    public TestContext()  {
+    Scenario scenario=null;
+    public TestContext() throws Exception {
         this.propertyReader = new PropertyReader();
-        this.baseTestSession=new BaseTestSession("chrome",propertyReader);
+        propertyReader.initialisePropertyFile();
+        this.baseTestSession=new BaseTestSession(propertyReader.readProperty("browser"),propertyReader);
         this.restWrapper= new RestWrapper();
         this.pageObjectManager=new PageObjectManager(baseTestSession);
         this.apiObjectManager=new ApiObjectManager(restWrapper);
     }
 
+    public void setScenario(Scenario scenario) {
+        this.scenario = scenario;
+    }
+    public Scenario getScenario() {
+        return scenario;
+    }
     public PropertyReader getPropertyReader() {
         return propertyReader;
     }

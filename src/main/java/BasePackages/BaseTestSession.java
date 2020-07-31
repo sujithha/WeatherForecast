@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import cucumber.api.Scenario;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -91,14 +92,10 @@ public class BaseTestSession  {
 		driver.quit();
 	}
 	
-	public  void takeScreenShot(){
-		try {
-		File screenshotFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-		FileUtils.copyFile(screenshotFile, new File(System.getProperty("user.dir")+"/screenshots"));
-		} catch (IOException e) {
-			
-		}
-		
+	public  void takeScreenShot(Scenario scenario){
+		final byte[] screenshotFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.BYTES);
+			scenario.embed(screenshotFile,"image/png");
+
 	}
 	
 	public WebElement getVisibleElement(By xpath){

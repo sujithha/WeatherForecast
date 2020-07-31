@@ -5,11 +5,25 @@ import java.util.Properties;
 
 public class PropertyReader {
 	static  Properties properties= new Properties();
-	static String filePath=System.getProperty("user.dir")+"\\src\\test\\resources\\Properties\\QA.properties";
+	static String filePath=null;
 
-	public void initialisePropertyFile(String environment){
-		filePath=System.getProperty("user.dir")+"\\src\\test\\resources\\Properties\\"+environment.toUpperCase()+".properties";
-	}
+	public void initialisePropertyFile(){
+		try {
+
+			String environment=System.getProperty("environment");
+			if(environment!=null){
+				filePath = System.getProperty("user.dir") + "\\src\\test\\resources\\properties\\" + environment.toUpperCase() + ".properties";
+
+			}
+			else {
+				filePath=System.getProperty("user.dir")+"\\src\\test\\resources\\properties\\QA.properties";
+			}
+			}
+		catch (Exception e){
+			filePath=System.getProperty("user.dir")+"\\src\\test\\resources\\properties\\QA.properties";
+		}
+
+		}
 
 	public  String readProperty(String value) throws Exception {
 	    String str=null;

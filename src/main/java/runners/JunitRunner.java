@@ -5,7 +5,7 @@ package runners;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-        features = "src/test/resources/Features",
+        features = "src/test/resources/features",
         glue= {"StepDef"},
         dryRun = false,
         monochrome = true,
